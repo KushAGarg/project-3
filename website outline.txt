@@ -1,0 +1,23 @@
+GOALS:
+
+10/12
+- Clean the data, make sure the data is maleable, jsonifiable, and that the data types are ideal.
+- House the data in PostgreSQL server
+- Outline the website
+
+FIRST, TREAT IT ALL AS ONE WEBPAGE BEFORE ADDING NAV BAR & PAGES
+
+Pages:
+- Home (index.html)
+    - Interactive map of UFO sightings (using Leaflet)
+- Analysis
+    - Data visualizations (charts, graphs, using Plotly)
+- Data
+    - Dataframe heads, which will have to be translated from Pandas DF to HTML Table
+- API
+    - will need workable routes that mean you put in an ID number and it spits out the JSONified entry
+
+Needs:
+- HTML files for each page
+- JS files for each page (ugh)
+- ONE CSS file...
