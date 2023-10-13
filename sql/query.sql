@@ -1,14 +1,14 @@
 DROP TABLE IF EXISTS ufos;
 CREATE TABLE ufos (
     id SERIAL PRIMARY KEY,
-    datetime DATETIME NOT NULL,
+    datetime DATE NOT NULL,
     city VARCHAR NOT NULL,
     state VARCHAR NOT NULL,
     country VARCHAR NOT NULL,
     shape VARCHAR NOT NULL,
     duration_secs INT NOT NULL,
     duration_min VARCHAR,
-    date_posted DATETIME,
+    date_posted DATE,
     latitude NUMERIC,
     longtiude NUMERIC
 );
