@@ -6,11 +6,10 @@ CREATE TABLE ufos (
     state VARCHAR NOT NULL,
     country VARCHAR NOT NULL,
     shape VARCHAR NOT NULL,
-    duration_secs INT NOT NULL,
-    duration_min VARCHAR,
-    date_posted DATE,
+    duration_seconds INT NOT NULL,
     latitude NUMERIC,
-    longtiude NUMERIC
+    longtiude NUMERIC,
+    date_posted DATE
 );
 
 COPY ufos TO 'C:\Users\andre\Documents\GitHub\project-3\data\scrubbed.csv' DELIMITER ',' CSV HEADER;
