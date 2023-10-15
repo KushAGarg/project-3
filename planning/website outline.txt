@@ -21,3 +21,9 @@ Needs:
 - HTML files for each page
 - JS files for each page (ugh)
 - ONE CSS file...
+
+TO DO (10/16)
+- Person 1: Clean up the cells, variable names, and add comments to code.
+- Person 2: Craft interesting DataFrames from the data. Consider GroupBy, sort_values, and anomalies (extrema) in the data.
+- Person 3: Begin constructing the HTML that will be necessary for website to function.
+- Person 4: Begin work on the visualizations. Start with a leaflet map that identifies the geographic location of each observation.

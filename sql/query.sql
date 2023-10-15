@@ -5,8 +5,8 @@ CREATE TABLE ufos (
     city VARCHAR NOT NULL,
     "state" VARCHAR NOT NULL,
     country VARCHAR NOT NULL,
-    shape VARCHAR NOT NULL,
-    duration_seconds INT NOT NULL,
+    shape VARCHAR,
+    duration_seconds NUMERIC NOT NULL,
     latitude NUMERIC,
     longitude NUMERIC,
     date_posted DATE
