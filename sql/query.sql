@@ -3,12 +3,12 @@ CREATE TABLE ufos (
     id SERIAL PRIMARY KEY,
     datetime DATE NOT NULL,
     city VARCHAR NOT NULL,
-    state VARCHAR NOT NULL,
+    "state" VARCHAR NOT NULL,
     country VARCHAR NOT NULL,
     shape VARCHAR NOT NULL,
     duration_seconds INT NOT NULL,
     latitude NUMERIC,
-    longtiude NUMERIC,
+    longitude NUMERIC,
     date_posted DATE
 );
 
