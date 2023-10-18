@@ -17,9 +17,9 @@ function createMap(ufos) {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     })
   
-    let dark = L.tileLayer('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.{ext}', {
-      attribution: '&copy; <a href="https://www.stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      ext: 'png'
+    let dark = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg', {
+      maxZoom: 18,
+      attribution: 'Map data &copy; <a href="https://stamen.com/">Stamen Design</a>'
     });
   
     // Create a baseMaps object.
@@ -84,7 +84,7 @@ function createFeatures(ufoData) {
       return L.circleMarker(coord, options);
     }
 
-    // Create a GeoJSON layer that contains the features array on the earthquakeData object.
+    // Create a GeoJSON layer that contains the features array on the ufos object.
     // Run the onEachFeature function once for each piece of data in the array.
     
     // EASIER TO AVOID USING GEOJSON IF YOU CAN MAKE CIRCLE MARKERS WITHOUT USING GEOJSON.
