@@ -33,3 +33,7 @@ TO DO (10/18)
 - Person 4: Construct the HTML/CSS that will be necessary for website to function. This includes getting the nav bar 
             to traverse different html files (This is not as intimidating as it seems!). This includes making table elements
             on the Data tab where we will populate it with the dataframes (also a good learning moment!).
+
+# Scatter plot of duration? Find extrema.
+# Visualizations include dropdown by state and that populates metadata and top cities in the state by sightings.
+# Figure out when we can dedicate time this weekend to the project.
