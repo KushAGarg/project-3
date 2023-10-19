@@ -5,8 +5,11 @@
 // UFO coordinates
 let queryUrl = "http://127.0.0.1:5000/api/v1.0/all_locations";
 
+let y = 0;
+
 d3.json(queryUrl).then(function(data) {
     console.log(data);
+    y = data;
     createFeatures(data);
 });
 
@@ -86,14 +89,46 @@ function createFeatures(ufoData) {
     return L.circleMarker(coord, options);
   }
 
-  let markers = [];
+  // let markers = [];
 
-  for (x of ufoData) {
-    console.log(x); 
-    coord = [x.latitude, x.longitude];
-    markers.push(createCircleMarker(coord));
+  // for (ufo of ufoData) {
+  //   console.log(ufo); 
+  //   coord = [ufo.latitude, ufo.longitude];
+  //   markers.push(createCircleMarker(coord));
+  // } 
+
+  //   // Send our ufo layer to the createMap function/
+  //   // createMap(L.layerGroup(markers));
+  //   createMap(L.MarkerClusterGroup(markers));
+
+  let markers = L.markerClusterGroup();
+  // var clusters = new L.MarkerClusterGroup();
+
+  for (ufo of ufoData) {
+    console.log(ufo); 
+    coord = [ufo.latitude, ufo.longitude];
+    markers.addLayer(createCircleMarker(coord));
   } 
 
     // Send our ufo layer to the createMap function/
-    createMap(L.layerGroup(markers));
+    // createMap(L.layerGroup(markers));
+    createMap(markers);
+
 }
+
+// // Create a new marker cluster group.
+// let markers = L.markerClusterGroup();
+
+// // Loop through the data.
+// for (let i = 0; i < response.length; i++) {
+
+//   // Set the data location property to a variable.
+//   let location = response[i].location;
+
+//   // Check for the location property.
+//   if (location) {
+
+//     // Add a new marker to the cluster group, and bind a popup.
+//     markers.addLayer(L.marker([location.coordinates[1], location.coordinates[0]])
+//       .bindPopup(response[i].descriptor));
+//   }

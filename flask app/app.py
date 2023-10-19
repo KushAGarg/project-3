@@ -44,7 +44,7 @@ def home():
     return ()
 
 @app.route("/api/v1.0/all_locations")
-def stations():
+def all_locations():
     """Return a JSON list of UFO sighting coordinates from the dataset"""
     data = session.query(Ufos.id, Ufos.latitude, Ufos.longitude).all()
 
@@ -53,6 +53,26 @@ def stations():
     all_coordinates = []
     for id, latitude, longitude in data:
         coords_dict = {}
+        coords_dict["id"] = id
+        coords_dict["latitude"] = latitude
+        coords_dict["longitude"] = longitude
+        all_coordinates.append(coords_dict)
+
+    return (jsonify(all_coordinates))
+
+## Marker clusters to avoid Leaflet problem
+
+@app.route("/api/v1.0/before2000")
+def before2000():
+    """Return a JSON list of UFO sighting coordinates before the year 2000"""
+    data = session.query(Ufos.datetime, Ufos.id, Ufos.latitude, Ufos.longitude).filter(Ufos.datetime <= func.date("2000-01-01")).all()
+
+    session.close()
+    
+    all_coordinates = []
+    for datetime, id, latitude, longitude in data:
+        coords_dict = {}
+        coords_dict["datetime"] = datetime
         coords_dict["id"] = id
         coords_dict["latitude"] = latitude
         coords_dict["longitude"] = longitude

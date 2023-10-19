@@ -26,8 +26,8 @@ TO DO (10/18)
 - Person 1: Clean up & find anomalies (extrema) in the data. Additionally, this person can expand on the vision of the
             project (how do we make it more interactive? What could we do to decorate the website? (CSS knowledge
             not required) What still needs to be done?)
-- Person 2: Flask app and Leaflet map. I will have to consult with Eli as to why I am having an error. Given that the map
-            is our homepage, this is a necessary step.
+- Person 2: Flask app and Leaflet map. Improve Flask app routes to make it more accessible to the User including the API home route.
+            Leaflet map is done, but still see if you can't find a dark map for it.
 - Person 3: Visualizations. Consider the proposal and the plotly (belly-button) assignment we did. Consult with group.
             We will need visualizations to fulfill the requirements. Time to get creative and start working.
 - Person 4: Construct the HTML/CSS that will be necessary for website to function. This includes getting the nav bar 
