@@ -5,7 +5,7 @@
 // recent recorded sightings.
 
 //Translate the json to a variable
-const url = "FLASK ROUTE HERE. JSONIFY ALL DATA."
+const url = "http://127.0.0.1:5000/api/v1.0/all_data"
 
 //Fetch the json data in the console
 d3.json(url).then(function(data) {
@@ -13,14 +13,29 @@ d3.json(url).then(function(data) {
 });
 
 // Init function
+function init() {
+
+}
 
 // barChart function
+function barChart(state) {
+
+}
 
 // pieChart function
+function pieChart(state) {
+
+}
 
 // metaData function
+function metaData(state) {
+
+}
 
 // optionChanged function
+function optionChanged(state) {
+    
+}
 
 //Call the initialize function
 // init();
