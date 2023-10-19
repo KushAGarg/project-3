@@ -42,7 +42,7 @@ print(Base.classes.keys())
 def home():
     """How to use API documentation -- home"""
     return (
-        f"<b>Hawaii Climate API - Module 10 Challenge</b> <br/>"
+        f"<b>UFO sightings API - Project 3</b> <br/>"
         f"-----------------------------------------<br/>"
         f"<i>API DOCUMENTATION</i><br/>Available routes: <br/>"
         f"<br/>"
@@ -151,8 +151,9 @@ def call_id(id):
 
 ## Routes needed:
 # UPDATE HOME ROUTE -- incorrect
-# Route to return JSON by state, average duration, number of entries, and the most common shape
-# Route to return JSON by year
+# Route to return JSON by state -- average duration, number of entries, and the most common shape
+# Route to return JSON by year -- average duration, number of entries, and the most common shape
+# Route to return JSON by month/year
 # Route to return JSON between given time period
 # Route to return JSON above or below duration input
 # Route to return JSON by shape
