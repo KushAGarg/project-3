@@ -60,8 +60,6 @@ def all_locations():
 
     return (jsonify(all_coordinates))
 
-## Marker clusters to avoid Leaflet problem
-
 @app.route("/api/v1.0/before2000")
 def before2000():
     """Return a JSON list of UFO sighting coordinates before the year 2000"""
@@ -79,6 +77,14 @@ def before2000():
         all_coordinates.append(coords_dict)
 
     return (jsonify(all_coordinates))
+
+## Routes needed:
+# Route to return JSON by #ID 
+# Route to return JSON by state
+# Route to return JSON by year
+# Route to return JSON between given time period
+# Route to return JSON above or below duration input
+# Route to return JSON by shape
 
 # Run the Flask app
 if __name__ == '__main__':
