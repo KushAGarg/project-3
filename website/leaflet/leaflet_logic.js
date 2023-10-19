@@ -17,14 +17,14 @@ function createMap(ufos) {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     })
   
-    let dark = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg', {
-      maxZoom: 18,
-      attribution: 'Map data &copy; <a href="https://stamen.com/">Stamen Design</a>'
-    });
+    // let dark = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.jpg', {
+    //   maxZoom: 18,
+    //   attribution: 'Map data &copy; <a href="https://stamen.com/">Stamen Design</a>'
+    // });
   
     // Create a baseMaps object.
     let baseMaps = {
-      "Night Map": dark,
+      // "Night Map": dark,
       "Street Map": street
     };
   
@@ -39,7 +39,7 @@ function createMap(ufos) {
         37.09, -95.71
       ],
       zoom: 5,
-      layers: [dark, ufos]
+      layers: [street, ufos]
     });
   
     // Create a layer control.
@@ -73,25 +73,27 @@ function createMap(ufos) {
     legend.addTo(myMap);
 }
 
+
 function createFeatures(ufoData) {
-  
-    function createCircleMarker(coord) {
-      let options = {
-        radius: 1,
-        fillOpacity: 0.75,
-        color: "black"
-      }
-      return L.circleMarker(coord, options);
+
+  function createCircleMarker(coord) {
+    let options = {
+      radius: 0.25,
+      fillOpacity: 0.50,
+      color: "grey",
+      weight: 1
     }
+    return L.circleMarker(coord, options);
+  }
 
-    // Create a GeoJSON layer that contains the features array on the ufos object.
-    // Run the onEachFeature function once for each piece of data in the array.
-    
-    // EASIER TO AVOID USING GEOJSON IF YOU CAN MAKE CIRCLE MARKERS WITHOUT USING GEOJSON.
-    let ufos = L.geoJSON(ufoData, {
-      pointToLayer: createCircleMarker
-    });
+  let markers = [];
 
-    // Send our earthquakes layer to the createMap function/
-    createMap(ufos);
+  for (x of ufoData) {
+    console.log(x); 
+    coord = [x.latitude, x.longitude];
+    markers.push(createCircleMarker(coord));
+  } 
+
+    // Send our ufo layer to the createMap function/
+    createMap(L.layerGroup(markers));
 }
