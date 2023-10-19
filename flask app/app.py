@@ -41,7 +41,52 @@ print(Base.classes.keys())
 @app.route("/")
 def home():
     """How to use API documentation -- home"""
-    return ()
+    return (
+        f"<b>Hawaii Climate API - Module 10 Challenge</b> <br/>"
+        f"-----------------------------------------<br/>"
+        f"<i>API DOCUMENTATION</i><br/>Available routes: <br/>"
+        f"<br/>"
+        f"To return a JSON dictionary of the last 12 months of precipitation data, use this path:<br/>"
+        f"/api/v1.0/precipitation <br/>"
+        f"<br/>"
+        f"To return a JSON dictionary of all the stations included in the data set, use this path:<br/>"
+        f"/api/v1.0/stations <br/>"
+        f"<br/>"
+        f"To return a JSON list of temperature observations for the previous year for the most-active station, use this path:<br/>"
+        f"/api/v1.0/tobs <br/>"
+        f"<br/>"
+        f"The following paths will return the minimum, maximum, and average temperature over the given interval, \
+            through the end of the dataset if a specified end-date is not included.<br/>"
+        f"<br/>"
+        f"/api/v1.0/start-date (Enter as format YYYY-MM-DD) <br/>"
+        f"/api/v1.0/start-date/end-date (Enter as format YYYY-MM-DD/YYYY-MM-DD) <br/>"
+        f"<br/>"
+        f"<br/>"
+        f"API by Andrew Prozorovsky"
+    )
+
+@app.route("/api/v1.0/all_data")
+def all_data():
+    """Return a JSON list of the dataset"""
+    data = session.query(Ufos.id, Ufos.datetime, Ufos.city, Ufos.state, Ufos.shape, \
+                         Ufos.duration_seconds, Ufos.latitude, Ufos.longitude).all()
+
+    session.close()
+    
+    all_data = []
+    for id, datetime, city, state, shape, duration_seconds, latitude, longitude in data:
+        data_dict = {}
+        data_dict["id"] = id
+        data_dict["datetime"] = datetime
+        data_dict["city"] = city
+        data_dict["state"] = state
+        data_dict["shape"] = shape
+        data_dict["duration_seconds"] = duration_seconds
+        data_dict["latitude"] = latitude
+        data_dict["longitude"] = longitude
+        all_data.append(data_dict)
+
+    return (jsonify(all_data))
 
 @app.route("/api/v1.0/all_locations")
 def all_locations():
@@ -78,9 +123,35 @@ def before2000():
 
     return (jsonify(all_coordinates))
 
+@app.route("/api/v1.0/<id>")
+def call_id(id):
+    """Return the JSON entry by its entered ID"""
+    
+    data = session.query(Ufos.id, Ufos.datetime, Ufos.city, Ufos.state, Ufos.shape, \
+                         Ufos.duration_seconds, Ufos.latitude, Ufos.longitude)\
+                            .filter(Ufos.id == id).all()
+
+    session.close()
+
+    sighting = []
+    for id, datetime, city, state, shape, duration_seconds, latitude, longitude in data:
+        data_dict = {}
+        data_dict["id"] = id
+        data_dict["datetime"] = datetime
+        data_dict["city"] = city
+        data_dict["state"] = state
+        data_dict["shape"] = shape
+        data_dict["duration_seconds"] = duration_seconds
+        data_dict["latitude"] = latitude
+        data_dict["longitude"] = longitude
+        sighting.append(data_dict)
+
+    return (jsonify(sighting))
+
+
 ## Routes needed:
-# Route to return JSON by #ID 
-# Route to return JSON by state
+# UPDATE HOME ROUTE -- incorrect
+# Route to return JSON by state, average duration, number of entries, and the most common shape
 # Route to return JSON by year
 # Route to return JSON between given time period
 # Route to return JSON above or below duration input
