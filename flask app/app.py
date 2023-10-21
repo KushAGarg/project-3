@@ -46,21 +46,32 @@ def home():
         f"-----------------------------------------<br/>"
         f"<i>API DOCUMENTATION</i><br/>Available routes: <br/>"
         f"<br/>"
-        f"To return a JSON dictionary of the last 12 months of precipitation data, use this path:<br/>"
-        f"/api/v1.0/precipitation <br/>"
+        f"To return all data, use this path:<br/>"
+        f"/api/v1.0/all_data <br/>"
         f"<br/>"
-        f"To return a JSON dictionary of all the stations included in the data set, use this path:<br/>"
-        f"/api/v1.0/stations <br/>"
+        f"To return a JSON dictionary of all the coordinates included in the data set, use this path:<br/>"
+        f"/api/v1.0/all_locations <br/>"
         f"<br/>"
-        f"To return a JSON list of temperature observations for the previous year for the most-active station, use this path:<br/>"
-        f"/api/v1.0/tobs <br/>"
+        f"To return a JSON list of UFO sighting coordinates before the year 2000, use this path:<br/>"
+        f"/api/v1.0/before2000 <br/>"
         f"<br/>"
-        f"The following paths will return the minimum, maximum, and average temperature over the given interval, \
-            through the end of the dataset if a specified end-date is not included.<br/>"
+        f"To return the entry of a specific ID, use this path:<br/>"
+        f"/api/v1.0/id/[id] <br/>"
         f"<br/>"
-        f"/api/v1.0/start-date (Enter as format YYYY-MM-DD) <br/>"
-        f"/api/v1.0/start-date/end-date (Enter as format YYYY-MM-DD/YYYY-MM-DD) <br/>"
+        f"To return the number of entries and the average duration for a specific state, use this path:<br/>"
+        f"/api/v1.0/state/[state abbreviation] <br/>"
         f"<br/>"
+        f"To return the number of entries and the average duration for a given year, use this path:<br/>"
+        f"/api/v1.0/year/[year] <br/>"
+        f"<br/>"
+        f"To return a JSON list of all the sightings from a given month of a given year, use this path:<br/>"
+        f"/api/v1.0/month-year/[month]/[year] <br/>"
+        f"<br/>"
+        f"To return a JSON list of all the sightings under a given duration (seconds), use this path:<br/>"
+        f"/api/v1.0/duration/[duration] <br/>"
+        f"<br/>"
+        f"To return a JSON list of all the sightings which had the same descriptor, use this path:<br/>"
+        f"/api/v1.0/shape/[descriptor] <br/>"
         f"<br/>"
         f"API by Andrew Prozorovsky"
     )
@@ -123,7 +134,7 @@ def before2000():
 
     return (jsonify(all_coordinates))
 
-@app.route("/api/v1.0/<id>")
+@app.route("/api/v1.0/id/<id>")
 def call_id(id):
     """Return the JSON entry by its entered ID"""
     
@@ -148,15 +159,117 @@ def call_id(id):
 
     return (jsonify(sighting))
 
+@app.route("/api/v1.0/state/<state>")
+def state(state):
+    """Return the number of entries and the average duration for that state."""
+
+    data = session.query(func.count(), func.avg(Ufos.duration_seconds)).filter(Ufos.state == state).all()
+
+    session.close()
+
+    state_aggs = []
+    for count, avg in data:
+        data_dict = {}
+        data_dict["number of sightings"] = count
+        data_dict["average duration"] = avg
+        state_aggs.append(data_dict)
+
+    return (jsonify(state_aggs))
+
+@app.route("/api/v1.0/year/<year>")
+def year(year):
+    """Return the number of entries and the average duration for that year."""
+
+    data = session.query(func.count(), func.avg(Ufos.duration_seconds)).filter(func.extract('year', Ufos.datetime) == year).all()
+    
+    session.close()
+
+    year_aggs = []
+    for count, avg in data:
+        data_dict = {}
+        data_dict["number of sightings"] = count
+        data_dict["average duration"] = avg
+        year_aggs.append(data_dict)
+
+    return (jsonify(year_aggs))
+
+@app.route("/api/v1.0/month-year/<month>/<year>")
+def monthyear(month, year):
+    """Return all entries for a certain month of a certain year."""
+
+    data = session.query(Ufos.id, Ufos.datetime, Ufos.city, Ufos.state, Ufos.shape, \
+                         Ufos.duration_seconds, Ufos.latitude, Ufos.longitude).\
+                            filter(func.extract('year', Ufos.datetime) == year).\
+                            filter(func.extract('month', Ufos.datetime) == month).all()
+    
+    session.close()
+
+    monthyear_data = []
+    for id, datetime, city, state, shape, duration_seconds, latitude, longitude in data:
+        data_dict = {}
+        data_dict["id"] = id
+        data_dict["datetime"] = datetime
+        data_dict["city"] = city
+        data_dict["state"] = state
+        data_dict["shape"] = shape
+        data_dict["duration_seconds"] = duration_seconds
+        data_dict["latitude"] = latitude
+        data_dict["longitude"] = longitude
+        monthyear_data.append(data_dict)
+
+    return (jsonify(monthyear_data))
+
+@app.route("/api/v1.0/duration/<duration>")
+def duration(duration):
+    """Return the entries under a certain encounter duration."""
+
+    data = session.query(Ufos.id, Ufos.datetime, Ufos.city, Ufos.state, Ufos.shape, \
+                         Ufos.duration_seconds, Ufos.latitude, Ufos.longitude).filter(Ufos.duration_seconds <= duration).all()
+    
+    session.close()
+
+    duration_data = []
+    for id, datetime, city, state, shape, duration_seconds, latitude, longitude in data:
+        data_dict = {}
+        data_dict["id"] = id
+        data_dict["datetime"] = datetime
+        data_dict["city"] = city
+        data_dict["state"] = state
+        data_dict["shape"] = shape
+        data_dict["duration_seconds"] = duration_seconds
+        data_dict["latitude"] = latitude
+        data_dict["longitude"] = longitude
+        duration_data.append(data_dict)
+
+    return (jsonify(duration_data))
+
+@app.route("/api/v1.0/shape/<shape>")
+def shape(shape):
+    """Return the entries according to a certain descriptor."""
+
+    data = session.query(Ufos.id, Ufos.datetime, Ufos.city, Ufos.state, Ufos.shape, \
+                         Ufos.duration_seconds, Ufos.latitude, Ufos.longitude).filter(Ufos.shape == shape).all()
+    
+    session.close()
+
+    shape_data = []
+    for id, datetime, city, state, shape, duration_seconds, latitude, longitude in data:
+        data_dict = {}
+        data_dict["id"] = id
+        data_dict["datetime"] = datetime
+        data_dict["city"] = city
+        data_dict["state"] = state
+        data_dict["shape"] = shape
+        data_dict["duration_seconds"] = duration_seconds
+        data_dict["latitude"] = latitude
+        data_dict["longitude"] = longitude
+        shape_data.append(data_dict)
+
+    return (jsonify(shape_data))
 
 ## Routes needed:
 # UPDATE HOME ROUTE -- incorrect
-# Route to return JSON by state -- average duration, number of entries, and the most common shape
-# Route to return JSON by year -- average duration, number of entries, and the most common shape
-# Route to return JSON by month/year
 # Route to return JSON between given time period
-# Route to return JSON above or below duration input
-# Route to return JSON by shape
 
 # Run the Flask app
 if __name__ == '__main__':
