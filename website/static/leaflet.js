@@ -76,38 +76,36 @@ function createMap(ufos) {
     legend.addTo(myMap);
 }
 
+// function onEachFeature(feature, layer) {
+//     layer.bindPopup(`<h3>${feature.id}</h3><hr><p>${new Date(feature.datetime)}</p><hr> \
+//                     <p>Descriptor: ${feature.shape}<br>Duration: ${feature.duration_seconds}</p>`);
+// }
 
 function createFeatures(ufoData) {
 
-  function createCircleMarker(coord) {
+  function createCircleMarker(ufo) {
     let options = {
-      radius: 0.25,
+      radius: 1,
       fillOpacity: 0.50,
       color: "grey",
-      weight: 1
-    }
-    return L.circleMarker(coord, options);
+      weight: 1,
+    };
+
+    const coord = [ufo.latitude, ufo.longitude];
+
+    // Create the circle marker and bind the popup to it
+    const marker = L.circleMarker(coord, options).bindPopup(
+      `<h3>${ufo.id}</h3><hr><p>${new Date(ufo.datetime)}</p><hr>
+       <p>Descriptor: ${ufo.shape}<br>Duration: ${ufo.duration_seconds}</p>`
+    );
+
+    return marker;
   }
 
-  // let markers = [];
-
-  // for (ufo of ufoData) {
-  //   console.log(ufo); 
-  //   coord = [ufo.latitude, ufo.longitude];
-  //   markers.push(createCircleMarker(coord));
-  // } 
-
-  //   // Send our ufo layer to the createMap function/
-  //   // createMap(L.layerGroup(markers));
-  //   createMap(L.MarkerClusterGroup(markers));
-
   let markers = L.markerClusterGroup();
-  // var clusters = new L.MarkerClusterGroup();
 
   for (ufo of ufoData) {
-    console.log(ufo); 
-    coord = [ufo.latitude, ufo.longitude];
-    markers.addLayer(createCircleMarker(coord));
+    markers.addLayer(createCircleMarker(ufo));
   } 
 
     // Send our ufo layer to the createMap function/
@@ -115,20 +113,3 @@ function createFeatures(ufoData) {
     createMap(markers);
 
 }
-
-// // Create a new marker cluster group.
-// let markers = L.markerClusterGroup();
-
-// // Loop through the data.
-// for (let i = 0; i < response.length; i++) {
-
-//   // Set the data location property to a variable.
-//   let location = response[i].location;
-
-//   // Check for the location property.
-//   if (location) {
-
-//     // Add a new marker to the cluster group, and bind a popup.
-//     markers.addLayer(L.marker([location.coordinates[1], location.coordinates[0]])
-//       .bindPopup(response[i].descriptor));
-//   }
