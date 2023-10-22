@@ -233,3 +233,21 @@ thead {
   color: white;
   text-align: center;
 }
+
+.contact-ref {
+  text-align: center;
+}
+
+.submission-form {
+  text-align: center;
+  border: 2px solid white;
+  margin: 10px 200px;
+}
+
+#form {
+  width: 80%; /* Adjust the width as needed */
+  margin: 0 auto; /* Horizontally center the container */
+  padding: 20px; /* Add padding to control spacing inside the container */
+  color: white;
+  text-align: left;
+}

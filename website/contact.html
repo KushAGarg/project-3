@@ -75,8 +75,33 @@
         <!--Content goes here!-->
 
         <!--Contact reference to movie-->
+        <div class="contact-ref">
+            <h3 style="color: white; text-align: center">Did somebody say...Contact?</h3>
+            <img src="Images/contact-jodie.gif" alt="Contact 1997" width="300" height="200">
+        </div>
 
         <!--Form for reporting your own sighting-->
+        <div class="submission-form">
+            <h2 style="color: white; text-align: center">Report a UFO sighting</h2>
+            <form id="form" action="/submit-form" method="post">
+                <label for="name">Name:</label>
+                <input style="color:black" type="text" id="name" name="name" required>
+                <br>
+                <label for="time">Date, time:</label>
+                <input style="color:black" type="text" id="time" name="time" required>
+                <br>
+                <label for="location">City, state:</label>
+                <input style="color:black" type="location" id="location" name="location" required>
+                <br>
+                <label for="email">Email:</label>
+                <input style="color:black" type="email" id="email" name="email" required>
+                <br>
+                <label for="message">Sighting details:</label>
+                <input style="color:black" type="text" id="message" name="message" required>
+                <br>
+                <input style="color:black" type="submit" value="Submit">
+            </form>
+        </div>
 
         <!--Video "evidence" of UFO sightings-->
         <div class="video-evidence">
