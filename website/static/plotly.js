@@ -20,12 +20,11 @@ function init() {
     let dropdownMenu = d3.select("#selDataset");
         
     let states = [
-        "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
+        "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DC", "DE", "FL", "GA",
         "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD",
         "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ",
-        "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD",
-        "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY",
-        "DC", "PR"
+        "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "PR", "RI", "SC", "SD",
+        "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"
     ];
     
     //Add values to the dropdown menu
@@ -180,29 +179,73 @@ function metaData(state) {
     lowercase_state = state.toLowerCase();
 
     d3.json(url).then((data) => {
-
+        
         // Filter the data by the given state.
         let stateData = data.filter(result => result.state == lowercase_state);
 
         // Number of sightings
         const sightings = stateData.length;
 
-        // Median duration
-        const medianDuration = 0;
+        // Average duration
+        let averageDuration = 0.00;
+
+        stateData.forEach((elt) => {
+            averageDuration = averageDuration + parseFloat(elt.duration_seconds);
+        });
+
+        averageDuration = Math.round((averageDuration / sightings) * 100) / 100;
 
         // Most common shape
-        const commonShape = "n/a";
+        let  commonShape = "n/a";
+        let stateShapes = [];
 
-        // Oldest sighting
-        const oldestSighting = "YYYY-MM-DD";
+        stateData.forEach((elt) => {
+            // Check if the shape is already in state_shapes
+            const shapeIndex = stateShapes.findIndex((shape) => shape[0] === elt.shape);
 
-        // Most recent sighting
-        const newestSighting = "YYYY-MM-DD";
+            if (shapeIndex === -1) {
+                // If the city is not in state_cities, add it with a count of 1
+                stateShapes.push([elt.shape, 1]);
+            } else {
+                // If the city is already in state_cities, increment its count
+                stateShapes[shapeIndex][1] += 1;
+            }
+        });
+
+             // Get rid of null (NULL IS STILL APPEARING)
+        let newStateShapes = stateShapes.filter(item => item !== null && item !== undefined && item !== "" && item !== "null");
+
+            // Sort the state_cities based on the highest counts.
+        newStateShapes.sort((a, b) => b[1] - a[1]);
+        commonShape = newStateShapes[0][0];
+
+        // Oldest and most recent sighting -- NOTICE: it is returning it a day earlier because of automatic time-zone adjustment. Get help.
+        let newestSighting = new Date(stateData[0].datetime).getTime();
+
+        let oldestSighting = new Date(stateData[0].datetime).getTime();
+
+        stateData.forEach((elt) => {
+            const sightingDate = new Date(elt.datetime).getTime();
+            
+            console.log(oldestSighting);
+            if (sightingDate < oldestSighting) {
+                oldestSighting = sightingDate;
+            }
+
+            if (sightingDate > newestSighting) {
+                newestSighting = sightingDate;
+            }
+        })
+
+        // Convert back to date strings
+        oldestSighting = new Date(oldestSighting).toDateString();
+        newestSighting = new Date(newestSighting).toDateString();
 
         // Populate metadata
+        d3.select("#sample-metadata").html("");
         d3.select("#sample-metadata").append("h5").html(
-            `Sightings: ${sightings}/65113 (${Math.round(sightings/65113 * 100, 2)}%)<br/>Median duration: ${medianDuration}<br/>\
-            Popular descriptor: ${commonShape}<br/>Oldest sighting: ${oldestSighting}<br/>Most recent sighting: ${newestSighting}`
+            `Sightings: ${sightings}/65113 (${(Math.round((sightings/65113) * 100)/100)}%)<br/>Average duration: ${averageDuration} seconds<br/>\
+            Popular descriptor: "${commonShape}"<br/>Oldest sighting: ${oldestSighting}<br/>Last sighting in dataset: ${newestSighting}`
         );
 
     })
