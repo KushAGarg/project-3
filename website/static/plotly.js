@@ -103,7 +103,9 @@ function pieChart(state) {
 
     const sortedShapes = Object.entries(shapeCounts)
         .sort((a, b) => b[1] - a[1])
-        .slice(0, 20);
+        .slice(0, 20)
+        // Get rid of null (ERROR: NULL IS STILL APPEARING)
+        .filter(item => item !== null && item !== undefined && item !== "" && item !== "null");
 
     // Sum the counts of all items beyond the first 10
     const otherCount = sortedShapes.slice(10).reduce((total, item) => total + item[1], 0);
@@ -148,14 +150,20 @@ function metaData(state) {
     // Filter the data once
     const stateData = data.filter(result => result.state === lowercaseState);
 
+   // Number of sightings
     const sightings = stateData.length;
+    /* Math.round() only rounds to integers. Therefore, you need to
+    * 10000, Math.round(), / 100 to get a percent. 10000 because you need to go from 0.xxxx to xxxx.0 to xx.xx. */
+    const sightingsPct = Math.round((sightings / 65113) * 10000) / 100;
 
+    // Average duration
     let averageDuration = 0;
     stateData.forEach(elt => {
         averageDuration += parseFloat(elt.duration_seconds);
     });
     averageDuration = Math.round((averageDuration / sightings) * 100) / 100;
 
+    // Common shape
     const shapeCounts = {};
     stateData.forEach(elt => {
         const shape = elt.shape;
@@ -166,33 +174,33 @@ function metaData(state) {
         .sort((a, b) => b[1] - a[1]);
         commonShape = sortedShapes[0][0];
 
-        // Oldest and most recent sighting (ERROR: it is returning it a day earlier because of automatic time-zone adjustment)
-        let newestSighting = new Date(stateData[0].datetime).getTime();
+    // Oldest and most recent sighting (ERROR: it is returning it a day earlier because of automatic time-zone adjustment)
+    let newestSighting = new Date(stateData[0].datetime).getTime();
 
-        let oldestSighting = new Date(stateData[0].datetime).getTime();
+    let oldestSighting = new Date(stateData[0].datetime).getTime();
 
-        stateData.forEach((elt) => {
-            const sightingDate = new Date(elt.datetime).getTime();
-        
-            if (sightingDate < oldestSighting) {
-                oldestSighting = sightingDate;
-            }
+    stateData.forEach((elt) => {
+        const sightingDate = new Date(elt.datetime).getTime();
+    
+        if (sightingDate < oldestSighting) {
+            oldestSighting = sightingDate;
+        }
 
-            if (sightingDate > newestSighting) {
-                newestSighting = sightingDate;
-            }
-        })
+        if (sightingDate > newestSighting) {
+            newestSighting = sightingDate;
+        }
+    })
 
-        // Convert back to date strings
-        oldestSighting = new Date(oldestSighting).toDateString();
-        newestSighting = new Date(newestSighting).toDateString();
+    // Convert back to date strings
+    oldestSighting = new Date(oldestSighting).toDateString();
+    newestSighting = new Date(newestSighting).toDateString();
 
-        // Populate metadata
-        d3.select("#sample-metadata").html("");
-        d3.select("#sample-metadata").append("h5").html(
-            `Sightings: ${sightings}/65113 (${(Math.round((sightings/65113) * 100)/100)}%)<br/>Average duration: ${averageDuration} seconds<br/>\
-            Popular descriptor: "${commonShape}"<br/>Oldest sighting: ${oldestSighting}<br/>Last sighting in dataset: ${newestSighting}`
-        );
+    // Populate metadata
+    d3.select("#sample-metadata").html("");
+    d3.select("#sample-metadata").append("h5").html(
+        `Sightings: ${sightings}/65113 (${sightingsPct}%)<br/>Average duration: ${averageDuration} seconds<br/>\
+        Popular descriptor: "${commonShape}"<br/>Oldest sighting: ${oldestSighting}<br/>Last sighting in dataset: ${newestSighting}`
+    );
 
 }
 
