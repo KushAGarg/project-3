@@ -198,8 +198,9 @@ function metaData(state) {
     // Populate metadata
     d3.select("#sample-metadata").html("");
     d3.select("#sample-metadata").append("h5").html(
-        `Sightings: ${sightings}/65113 (${sightingsPct}%)<br/>Average duration: ${averageDuration} seconds<br/>\
-        Popular descriptor: "${commonShape}"<br/>Oldest sighting: ${oldestSighting}<br/>Last sighting in dataset: ${newestSighting}`
+        `<u>Sightings:</u> ${sightings}/65113 (${sightingsPct}%)<br/><u>Average duration:</u> ${averageDuration} seconds<br/>\
+        <u>Popular descriptor:</u> "${commonShape}"<br/><u>Oldest sighting:</u> ${oldestSighting}<br/>\
+        <u>Last sighting in dataset:</u> ${newestSighting}`
     );
 
 }

@@ -2,8 +2,12 @@
 <html lang="en">
 
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <script src="https://d3js.org/d3.v7.min.js"></script>
         <!--Links and imports-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link
             rel="stylesheet"
             href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -15,7 +19,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed&family=Poppins:wght@300&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="static/style.css" />
         
-        <title>UFO API</title>
+        <title>UFO Data</title>
 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
@@ -49,7 +53,7 @@
                 <a type="button" href="index.html" class="btn btn-default btn-lg upvote" value=1>
                   <span class=""></span> Home
                 </a>
-                <a type="button" href="analysis.html" class="btn btn-default btn-lg downvote" value=-1>
+                <a type="button" href="analysis_dash.html" class="btn btn-default btn-lg downvote" value=-1>
                   <span class=""></span> Analysis
                 </a>
                 <a type="button" href="data_tab.html" class="btn btn-default btn-lg upvote" value=1>
@@ -64,13 +68,41 @@
         </div>
         <br/>
         <div class="content-box">
-            <h2 style="text-align: center"><strong>UFO API Documentation</strong></h2>
-            <p class="centered-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <h2 style="text-align: center"><strong>UFO Sightings Data Analysis</strong></h2>
+            <p style="text-align: center" class="centered-text">Use the interactive charts below to explore the dataset
             </p>
+            <br/>
+            <br/>
+             <!--YOU WILL WANT TO CHANGE THE DIV CLASS NAMES-->
+  
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="well">
+                        <h5>State:</h5>
+                        <select id="selDataset" onchange="optionChanged(this.value)"></select>
+                        </div>
+                        <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 style="color: white" class="panel-title">Demographic Info</h3>
+                        </div>
+                        <div id="sample-metadata" class="panel-body"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div id="bar"></div>
+                    </div>
+                    <div class="col-md-5">
+                        <div id="pie"></div>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-12">
+                        <div id="bubble"></div>
+                    </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <footer>
@@ -78,6 +110,13 @@
                 <p>&copy; 2023 Group 3 Project 3</p>
             </div>
         </footer>
+  
+      <!--FILE PATHS WILL NEED TO BE CHANGED FOR THIS TO WORK-->
+    
+      <script src="https://d3js.org/d3.v7.min.js"></script>
+      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      <script src="static\plotly.js"></script>
+      <!-- <script src="./static/js/bonus.js"></script> -->
     
     <!-- Our JavaScript -->
     <script type="text/javascript" src=""></script>
