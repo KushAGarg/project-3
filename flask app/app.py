@@ -80,12 +80,12 @@ def home():
 def all_data():
     """Return a JSON list of the dataset"""
     data = session.query(Ufos.id, Ufos.datetime, Ufos.city, Ufos.state, Ufos.shape, \
-                         Ufos.duration_seconds, Ufos.latitude, Ufos.longitude).all()
+                         Ufos.duration_seconds, Ufos.latitude, Ufos.longitude, Ufos.comments).all()
 
     session.close()
     
     all_data = []
-    for id, datetime, city, state, shape, duration_seconds, latitude, longitude in data:
+    for id, datetime, city, state, shape, duration_seconds, latitude, longitude, comments in data:
         data_dict = {}
         data_dict["id"] = id
         data_dict["datetime"] = datetime
@@ -95,6 +95,7 @@ def all_data():
         data_dict["duration_seconds"] = duration_seconds
         data_dict["latitude"] = latitude
         data_dict["longitude"] = longitude
+        data_dict["comments"] = comments
         all_data.append(data_dict)
 
     return (jsonify(all_data))
@@ -139,13 +140,13 @@ def call_id(id):
     """Return the JSON entry by its entered ID"""
     
     data = session.query(Ufos.id, Ufos.datetime, Ufos.city, Ufos.state, Ufos.shape, \
-                         Ufos.duration_seconds, Ufos.latitude, Ufos.longitude)\
+                         Ufos.duration_seconds, Ufos.latitude, Ufos.longitude, Ufos.comments)\
                             .filter(Ufos.id == id).all()
 
     session.close()
 
     sighting = []
-    for id, datetime, city, state, shape, duration_seconds, latitude, longitude in data:
+    for id, datetime, city, state, shape, duration_seconds, latitude, longitude, comments in data:
         data_dict = {}
         data_dict["id"] = id
         data_dict["datetime"] = datetime
@@ -155,6 +156,7 @@ def call_id(id):
         data_dict["duration_seconds"] = duration_seconds
         data_dict["latitude"] = latitude
         data_dict["longitude"] = longitude
+        data_dict["comments"] = comments
         sighting.append(data_dict)
 
     return (jsonify(sighting))
@@ -248,12 +250,12 @@ def shape(shape):
     """Return the entries according to a certain descriptor."""
 
     data = session.query(Ufos.id, Ufos.datetime, Ufos.city, Ufos.state, Ufos.shape, \
-                         Ufos.duration_seconds, Ufos.latitude, Ufos.longitude).filter(Ufos.shape == shape).all()
+                         Ufos.duration_seconds, Ufos.latitude, Ufos.longitude, Ufos.comments).filter(Ufos.shape == shape).all()
     
     session.close()
 
     shape_data = []
-    for id, datetime, city, state, shape, duration_seconds, latitude, longitude in data:
+    for id, datetime, city, state, shape, duration_seconds, latitude, longitude, comments in data:
         data_dict = {}
         data_dict["id"] = id
         data_dict["datetime"] = datetime
@@ -263,6 +265,7 @@ def shape(shape):
         data_dict["duration_seconds"] = duration_seconds
         data_dict["latitude"] = latitude
         data_dict["longitude"] = longitude
+        data_dict["comments"] = comments
         shape_data.append(data_dict)
 
     return (jsonify(shape_data))

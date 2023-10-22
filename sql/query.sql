@@ -9,7 +9,8 @@ CREATE TABLE ufos (
     duration_seconds NUMERIC NOT NULL,
     latitude NUMERIC,
     longitude NUMERIC,
-    date_posted DATE
+    date_posted DATE,
+    "comments" TEXT
 );
 
-COPY ufos TO 'C:\Users\andre\Documents\GitHub\project-3\data\scrubbed.csv' DELIMITER ',' CSV HEADER;
+COPY ufos FROM 'C:\Users\andre\Documents\GitHub\project-3\data\final_data_comments.csv' DELIMITER ',' CSV HEADER;

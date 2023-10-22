@@ -1,0 +1,1 @@
+// Use this file to make the button that generates a random descriptor along with the rest of the encounter's information.
