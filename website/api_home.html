@@ -65,12 +65,59 @@
         <br/>
         <div class="content-box">
             <h2 style="text-align: center"><strong>UFO API Documentation</strong></h2>
-            <p class="centered-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <p class="centered-text">The API can be accessed through a number of routes to return JSON data. The data is stored in 
+                a SQL database and is then pulled by Flask to be interpreted. Some of these routes include:
             </p>
+            <br/>
+            <div class="api-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="text-align: center">API Route</th>
+                            <th style="text-align: center">Returns</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>127.0.0.1:5000/api/v1.0/all_data</td>
+                            <td>Returns a JSON dictionary of all sightings.</td>
+                        </tr>
+                        <tr>
+                            <td>127.0.0.1:5000/api/v1.0/all_locations</td>
+                            <td>Returns a JSON dictionary of all coordinates.</td>
+                        </tr>
+                        <tr>
+                            <td>127.0.0.1:5000/api/v1.0/id/[id]</td>
+                            <td>Returns the entry associated with a specific #ID.</td>
+                        </tr>
+                        <tr>
+                            <td>127.0.0.1:5000/api/v1.0/state/[state abbreviation]</td>
+                            <td>Returns the number of sightings and average sighting 
+                                duration for a given state.</td>
+                        </tr>
+                        <tr>
+                            <td>127.0.0.1:5000/api/v1.0/year/[year]</td>
+                            <td>Returns the number of sightings and average sighting 
+                                duration for a given year.</td>
+                        </tr>
+                        <tr>
+                            <td>127.0.0.1:5000/api/v1.0/month-year/[month]/[year]</td>
+                            <td>Returns a JSON dictionary of all sightings from a 
+                                specific month of a given year.</td>
+                        </tr>
+                        <tr>
+                            <td>127.0.0.1:5000/api/v1.0/month-year/duration/[duration]</td>
+                            <td>Returns a JSON dictionary of all sightings below a 
+                                given duration in seconds.</td>
+                        </tr>
+                        <tr>
+                            <td>127.0.0.1:5000/api/v1.0/month-year/shape/[descriptor]</td>
+                            <td>Returns a JSON dictionary of all sightings associated 
+                                with the same descriptor.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <footer>
