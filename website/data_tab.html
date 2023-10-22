@@ -83,14 +83,136 @@
             </p>
             <br/>
             <ul class="centered-text">
-              <li><strong>Some interesting conclusions from the dataset included:</strong></li>
+              <li style="font-size: 16px"><strong>Some interesting conclusions from the dataset included:</strong></li>
+              <ol>
+                  <li id="list">The American west was a hotbed of UFO sightings, with California having the most sightings by state 
+                    but top cities including Seattle, Phoenix, Portland, and Las Vegas.</li>
+                  <li id="list">Outside of the predictable descriptor “light,” the most common descriptor for what was seen was “triangle.”</li>  
+                  <li id="list">Roswell, New Mexico <i>did</i>, in fact, have a disproportionate number of sightings.</li>
+                  <li id="list">The median duration was 180 seconds and the mean was 5800 seconds, due to outliers.</li>
+              </ol>
             </ul>
 
             <ul class="centered-text">
-              <li><strong>Some limitations of the dataset included:</strong></li>
+              <li style="font-size: 16px"><strong>Some limitations of the dataset included:</strong></li>
+              <ol>
+                  <li id="list">We had no controls for population size or density when grouping by state.</li>
+                  <li id="list">More analysis is needed to remove the “duration” outliers which affected the averages. 
+                    The median duration was a far more accurate metric because, as one of the graphs shows, durations tended to be either short (quick sighting) or long (abductions?).</li>
+                  <li id="list">The vast majority of observations in the data came from the 21st century, though that may simply be a reflection 
+                    of the origins of the recorded data rather than evidence that UFO sightings have substantially increased.</li>
+                  <li id="list">The integrity of the data was uncertain at times, with descriptions not matching time or place. This was how the data was provided and not due to error on our part.</li>
+              </ol>
             </ul>
 
-            <h2 style="color: white; text-align: center"><strong>Dataframes</strong></h2>
+            <h2 style="color: white; text-align: center"><strong>Example Dataframe</strong></h2>
+            <h4 style="color: white; text-align: center">The last 12 UFO sightings in Roswell, New Mexico</h4>
+            <table id="df-table">
+              <tr id="df-header">
+                  <th style="text-align: center">ID</th>
+                  <th style="text-align: center; width: 180px">Datetime</th>
+                  <th style="text-align: center">Descriptor</th>
+                  <th style="text-align: center">Duration (seconds)</th>
+                  <th style="text-align: center">City</th>
+                  <th style="text-align: center">State</th>
+              </tr>
+              <tr>
+                  <td>13556</td>
+                  <td>2012-11-08 22:30:00</td>
+                  <td>flash</td>
+                  <td>3600.0</td>
+                  <td>roswell</td>
+                  <td>nm</td>
+              </tr>
+              <tr>
+                  <td>12847</td>
+                  <td>2011-01-16 14:30:00</td>
+                  <td>egg</td>
+                  <td>3.0</td>
+                  <td>roswell</td>
+                  <td>nm</td>
+              </tr>
+              <tr>
+                  <td>58098</td>
+                  <td>2009-08-05 20:45:00</td>
+                  <td>light</td>
+                  <td>35.0</td>
+                  <td>roswell</td>
+                  <td>nm</td>
+              </tr>
+              <tr>
+                  <td>38206</td>
+                  <td>2009-06-10 21:10:00</td>
+                  <td>sphere</td>
+                  <td>30.0</td>
+                  <td>roswell</td>
+                  <td>nm</td>
+              </tr>
+              <tr>
+                  <td>60685</td>
+                  <td>2008-09-15 18:30:00</td>
+                  <td>changing</td>
+                  <td>2700.0</td>
+                  <td>roswell</td>
+                  <td>nm</td>
+              </tr>
+              <tr>
+                  <td>58880</td>
+                  <td>2008-08-09 19:03:00</td>
+                  <td>light</td>
+                  <td>180.0</td>
+                  <td>roswell</td>
+                  <td>nm</td>
+              </tr>
+              <tr>
+                  <td>57884</td>
+                  <td>2008-08-04 21:53:00</td>
+                  <td>unknown</td>
+                  <td>6.0</td>
+                  <td>roswell</td>
+                  <td>nm</td>
+              </tr>
+              <tr>
+                  <td>64334</td>
+                  <td>2007-09-05 23:55:00</td>
+                  <td>changing</td>
+                  <td>15.0</td>
+                  <td>roswell</td>
+                  <td>nm</td>
+              </tr>
+              <tr>
+                  <td>20469</td>
+                  <td>2006-01-05 18:45:00</td>
+                  <td>flash</td>
+                  <td>1.0</td>
+                  <td>roswell</td>
+                  <td>nm</td>
+              </tr>
+              <tr>
+                  <td>50160</td>
+                  <td>2005-07-04 11:00:00</td>
+                  <td>disk</td>
+                  <td>5.0</td>
+                  <td>roswell</td>
+                  <td>nm</td>
+              </tr>
+              <tr>
+                  <td>54073</td>
+                  <td>2004-08-15 00:16:00</td>
+                  <td>disk</td>
+                  <td>780.0</td>
+                  <td>roswell</td>
+                  <td>nm</td>
+              </tr>
+              <tr>
+                  <td>34540</td>
+                  <td>2004-05-13 21:00:00</td>
+                  <td>light</td>
+                  <td>300.0</td>
+                  <td>roswell</td>
+                  <td>nm</td>
+              </tr>
+            </table>
             
             <div class="graphs">
               <h2 style="color: white"><strong>Graphs from the data</strong></h2>

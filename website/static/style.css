@@ -106,9 +106,15 @@ body {
   align-items: center;
 }
 
-.tbody, td {
-  border: 2px solid #000;
+tbody, td {
+  border: 2px solid #fffefe;
   padding: 5px;
+}
+
+thead {
+  border: 2px solid #fffefe;
+  padding: 5px;
+  background-color: rgb(12, 133, 12);
 }
 
 #descriptionButton {
@@ -155,7 +161,8 @@ body {
 
 .download-box {
   margin: 20px 100px;
-  padding: 30px;
+  margin-top: 0px;
+  padding: 10px;
 }
 
 .logo1 {
@@ -190,4 +197,19 @@ body {
   width: 140px;
   object-fit: cover;
   border-radius: 50%; /* This makes the container circular */
+}
+
+#list {
+  margin: 2px;
+}
+
+#df-table {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
+#df-table tr, #df-table td {
+  width: 150px;
 }
