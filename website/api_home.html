@@ -2,25 +2,80 @@
 <html lang="en">
 
     <head>
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <link
+            rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="static/leaflet.css" />
+        <title>UFO API</title>
+        <style>
+        body {
+            background-color: black;
+        }
+        
+        /* Original jumbotron color was #ba9766, #ba9766, #fae6ca */
+        .jumbotron {
+            background: #116e40 linear-gradient(#0f9050, #5dd172);
+            background-size: 100% 100%;
+            overflow: auto;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        </style>
+
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin="" />
+
+        <!-- Leaflet JS -->
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+        <!-- Marker cluster JavaScript code -->
+        <script type="text/javascript" src="https://unpkg.com/leaflet.markercluster@1.0.3/dist/leaflet.markercluster.js"></script>
+
+        <!-- Marker cluster CSS -->
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.css">
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/leaflet.markercluster@1.0.3/dist/MarkerCluster.Default.css">
 
     </head>
 
+    <!--Change the class IDs!-->
+
     <body>
-    <!--Home & Leaflet Map-->
+        <div class="container">
+          <div class="jumbotron" style="text-align:center">
+            <h2>UFO Sightings in the U.S.</h2>
+            <h4>By Andrew Prozorovsky, Manali Patel, Kush Garg, Sarah John</h4>
+            <h4>We looked at over 65,000 reported UFO sightings between the years of 1910-2014.<span class="star-wars"></span></h4>
 
-        
-
-    <!--Analysis & Plotly Visualizations-->
+            <div class="row">
+              <div class="col">
+                <a type="button" href="index.html" class="btn btn-default btn-lg upvote" value=1>
+                  <span class=""></span> Home
+                </a>
+                <a type="button" href="analysis_dash.html" class="btn btn-default btn-lg downvote" value=-1>
+                  <span class=""></span> Analysis
+                </a>
+                <a type="button" href="data_tab.html" class="btn btn-default btn-lg upvote" value=1>
+                  <span class=""></span> Data
+                </a>
+                <a type="button" href="api_home.html" class="btn btn-default btn-lg downvote" value=-1>
+                  <span class=""></span> API
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
     
-
-
-    <!--Data & Pd Dataframes-->
-    
-
-
-    <!--Flask documentation & fun ufo logo-->
-    
-
+    <!-- Our JavaScript -->
+    <script type="text/javascript" src=""></script>
 
     </body>
 </html>
