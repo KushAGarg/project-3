@@ -157,3 +157,37 @@ body {
   margin: 20px 100px;
   padding: 30px;
 }
+
+.logo1 {
+  position: relative;
+  border-radius: 50%; /* This makes the container circular */
+  z-index: 1; /* Set a higher z-index value for the image container */
+}
+
+#logo1 {
+  position: absolute;
+  margin: 20px;
+  top: 0;
+  left: 0;
+  height: 140px;
+  width: 140px;
+  object-fit: cover;
+  border-radius: 50%; /* This makes the container circular */
+}
+
+.logo2 {
+  position: relative;
+  border-radius: 50%; /* This makes the container circular */
+  z-index: 1; /* Set a higher z-index value for the image container */
+}
+
+#logo2 {
+  position: absolute;
+  margin: 20px;
+  top: 0;
+  right: 0;
+  height: 140px;
+  width: 140px;
+  object-fit: cover;
+  border-radius: 50%; /* This makes the container circular */
+}
