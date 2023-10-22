@@ -61,6 +61,9 @@ def home():
         f"To return the number of entries and the average duration for a specific state, use this path:<br/>"
         f"/api/v1.0/state/[state abbreviation] <br/>"
         f"<br/>"
+        f"To return the number of entries and the average duration for a specific city, use this path:<br/>"
+        f"/api/v1.0/city/[city]/[state abbreviation] <br/>"
+        f"<br/>"
         f"To return the number of entries and the average duration for a given year, use this path:<br/>"
         f"/api/v1.0/year/[year] <br/>"
         f"<br/>"
@@ -177,6 +180,23 @@ def state(state):
         state_aggs.append(data_dict)
 
     return (jsonify(state_aggs))
+
+@app.route("/api/v1.0/city/<city>/<state>")
+def city(city, state):
+    """Return the number of entries and the average duration for that city."""
+
+    data = session.query(func.count(), func.avg(Ufos.duration_seconds)).filter(Ufos.state == state).filter(Ufos.city == city).all()
+
+    session.close()
+
+    city_aggs = []
+    for count, avg in data:
+        data_dict = {}
+        data_dict["number of sightings"] = count
+        data_dict["average duration"] = avg
+        city_aggs.append(data_dict)
+
+    return (jsonify(city_aggs))
 
 @app.route("/api/v1.0/year/<year>")
 def year(year):
