@@ -6,11 +6,12 @@
 
 //Translate the json to a variable
 const url = "http://127.0.0.1:5000/api/v1.0/all_data"
+let data; // Store the fetched data
 
-//Fetch the json data in the console
-d3.json(url).then(function(data) {
-    console.log(data);
-    console.log(data[1])
+// Fetch the JSON data and call init when done
+d3.json(url).then(function(fetchedData) {
+    data = fetchedData;
+    init();
 });
 
 // Init function
@@ -48,55 +49,40 @@ function init() {
 function barChart(state) {
 // Bar chart that shows the top 10 cities in the state where there were sightings.
 
-    lowercase_state = state.toLowerCase();
-
-    d3.json(url).then((data) => {
-    
-        // Filter the data by the given state.
-        let stateData = data.filter(result => result.state == lowercase_state);
-
-        // Find the top 10 cities represented in the newly-filtered data.
-        let stateCities = [];
-
-        stateData.forEach((elt) => {
-            // Check if the city is already in state_cities
-            const cityIndex = stateCities.findIndex((city) => city[0] === elt.city);
-
-            if (cityIndex === -1) {
-                // If the city is not in state_cities, add it with a count of 1
-                stateCities.push([elt.city, 1]);
-            } else {
-                // If the city is already in state_cities, increment its count
-                stateCities[cityIndex][1] += 1;
-            }
-        });
-
-        // Sort the state_cities based on the highest counts. 
-        stateCities.sort((a, b) => b[1] - a[1]);
-        console.log(stateCities);
-
-        const top10Cities = stateCities.slice(0, 10);
-        const cities = top10Cities.map(cityData => cityData[0]).reverse();
-        const counts = top10Cities.map(cityData => cityData[1]).reverse();
-
-        // Plot
-        let trace = {
-            x: counts,
-            y: cities,
-            type: "bar",
-            orientation: "h"
-        }
+    const lowercaseState = state.toLowerCase();
         
-        // Create the data array and layout
-        let bar_data = [trace];
-        let layout = {
-            title: `Top 10 Cities in ${state} with UFO Sightings`
-        };
+    // Filter the data once
+    const stateData = data.filter(result => result.state === lowercaseState);
 
-        // Plot the bar chart
-        Plotly.newPlot("bar", bar_data, layout);
+    const cityCounts = {};
+    stateData.forEach(elt => {
+        const city = elt.city;
+        cityCounts[city] = (cityCounts[city] || 0) + 1;
+    });
 
-    })
+    const sortedCities = Object.entries(cityCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10);
+
+    const cities = sortedCities.map(cityData => cityData[0]).reverse();
+    const counts = sortedCities.map(cityData => cityData[1]).reverse();
+
+    // Plot
+    let trace = {
+        x: counts,
+        y: cities,
+        type: "bar",
+        orientation: "h"
+    }
+    
+    // Create the data array and layout
+    let bar_data = [trace];
+    let layout = {
+        title: `Top 10 Cities in ${state} with UFO Sightings`
+    };
+
+    // Plot the bar chart
+    Plotly.newPlot("bar", bar_data, layout);
 
 }
 
@@ -104,70 +90,51 @@ function barChart(state) {
 function pieChart(state) {
 // Pie chart that shows the descriptors (shapes) in the state where there were sightings.
 
-lowercase_state = state.toLowerCase();
+    const lowercaseState = state.toLowerCase();
+        
+    // Filter the data once
+    const stateData = data.filter(result => result.state === lowercaseState);
 
-    d3.json(url).then((data) => {
+    const shapeCounts = {};
+    stateData.forEach(elt => {
+        const shape = elt.shape;
+        shapeCounts[shape] = (shapeCounts[shape] || 0) + 1;
+    });
 
-        // Filter the data by the given state.
-        let stateData = data.filter(result => result.state == lowercase_state);
+    const sortedShapes = Object.entries(shapeCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 20);
 
-        // Find the shapes represented in the newly-filtered data.
-        let stateShapes = [];
+    // Sum the counts of all items beyond the first 10
+    const otherCount = sortedShapes.slice(10).reduce((total, item) => total + item[1], 0);
 
-        stateData.forEach((elt) => {
-            // Check if the shape is already in state_shapes
-            const shapeIndex = stateShapes.findIndex((shape) => shape[0] === elt.shape);
+    // Create a new array combining the top 10 and "other" category
+    const combinedData = [
+        ...sortedShapes,
+        ["Other", otherCount]
+    ];
 
-            if (shapeIndex === -1) {
-                // If the city is not in state_cities, add it with a count of 1
-                stateShapes.push([elt.shape, 1]);
-            } else {
-                // If the city is already in state_cities, increment its count
-                stateShapes[shapeIndex][1] += 1;
-            }
-        });
+    // Extract labels and values from combinedData
+    const labels = combinedData.map(data => data[0]);
+    const values = combinedData.map(data => data[1]);
 
-        // Get rid of null (NULL IS STILL APPEARING)
-        let newStateShapes = stateShapes.filter(item => item !== null && item !== undefined && item !== "" && item !== "null");
+    // Define the data trace for the pie chart
+    const pie_data = [
+        {
+            labels: labels,
+            values: values,
+            type: "pie"
+        }
+    ];
 
-        // Sort the state_cities based on the highest counts.
-        newStateShapes.sort((a, b) => b[1] - a[1]);
+    // Define the layout options (optional)
+    const layout = {
+        title: "State sightings by primary descriptor",
+        // Add other layout options here
+    };
 
-        const top10Shapes = newStateShapes.slice(0, 20);
-
-        // Sum the counts of all items beyond the first 10
-        const otherCount = newStateShapes.slice(10).reduce((total, item) => total + item[1], 0);
-
-        // Create a new array combining the top 10 and "other" category
-        const combinedData = [
-            ...top10Shapes,
-            ["Other", otherCount]
-        ];
-        console.log(combinedData);
-
-        // Extract labels and values from combinedData
-        const labels = combinedData.map(data => data[0]);
-        const values = combinedData.map(data => data[1]);
-
-        // Define the data trace for the pie chart
-        const pie_data = [
-            {
-                labels: labels,
-                values: values,
-                type: "pie"
-            }
-        ];
-
-        // Define the layout options (optional)
-        const layout = {
-            title: "State sightings by primary descriptor",
-            // Add other layout options here
-        };
-
-        // Create the pie chart
-        Plotly.newPlot("pie", pie_data, layout);
-
-    })
+    // Create the pie chart
+    Plotly.newPlot("pie", pie_data, layout);
 
 }
 
@@ -176,58 +143,37 @@ function metaData(state) {
 // The metadata should have the number of sightings in the state (of the total), the median duration of the encounter,
 // the most common shape seen, the oldest sighting, and the most recent sighting from the data.
 
-    lowercase_state = state.toLowerCase();
-
-    d3.json(url).then((data) => {
+    const lowercaseState = state.toLowerCase();
         
-        // Filter the data by the given state.
-        let stateData = data.filter(result => result.state == lowercase_state);
+    // Filter the data once
+    const stateData = data.filter(result => result.state === lowercaseState);
 
-        // Number of sightings
-        const sightings = stateData.length;
+    const sightings = stateData.length;
 
-        // Average duration
-        let averageDuration = 0.00;
+    let averageDuration = 0;
+    stateData.forEach(elt => {
+        averageDuration += parseFloat(elt.duration_seconds);
+    });
+    averageDuration = Math.round((averageDuration / sightings) * 100) / 100;
 
-        stateData.forEach((elt) => {
-            averageDuration = averageDuration + parseFloat(elt.duration_seconds);
-        });
+    const shapeCounts = {};
+    stateData.forEach(elt => {
+        const shape = elt.shape;
+        shapeCounts[shape] = (shapeCounts[shape] || 0) + 1;
+    });
 
-        averageDuration = Math.round((averageDuration / sightings) * 100) / 100;
+    const sortedShapes = Object.entries(shapeCounts)
+        .sort((a, b) => b[1] - a[1]);
+        commonShape = sortedShapes[0][0];
 
-        // Most common shape
-        let  commonShape = "n/a";
-        let stateShapes = [];
-
-        stateData.forEach((elt) => {
-            // Check if the shape is already in state_shapes
-            const shapeIndex = stateShapes.findIndex((shape) => shape[0] === elt.shape);
-
-            if (shapeIndex === -1) {
-                // If the city is not in state_cities, add it with a count of 1
-                stateShapes.push([elt.shape, 1]);
-            } else {
-                // If the city is already in state_cities, increment its count
-                stateShapes[shapeIndex][1] += 1;
-            }
-        });
-
-             // Get rid of null (NULL IS STILL APPEARING)
-        let newStateShapes = stateShapes.filter(item => item !== null && item !== undefined && item !== "" && item !== "null");
-
-            // Sort the state_cities based on the highest counts.
-        newStateShapes.sort((a, b) => b[1] - a[1]);
-        commonShape = newStateShapes[0][0];
-
-        // Oldest and most recent sighting -- NOTICE: it is returning it a day earlier because of automatic time-zone adjustment. Get help.
+        // Oldest and most recent sighting (ERROR: it is returning it a day earlier because of automatic time-zone adjustment)
         let newestSighting = new Date(stateData[0].datetime).getTime();
 
         let oldestSighting = new Date(stateData[0].datetime).getTime();
 
         stateData.forEach((elt) => {
             const sightingDate = new Date(elt.datetime).getTime();
-            
-            console.log(oldestSighting);
+        
             if (sightingDate < oldestSighting) {
                 oldestSighting = sightingDate;
             }
@@ -248,8 +194,6 @@ function metaData(state) {
             Popular descriptor: "${commonShape}"<br/>Oldest sighting: ${oldestSighting}<br/>Last sighting in dataset: ${newestSighting}`
         );
 
-    })
-
 }
 
 // optionChanged function
@@ -264,6 +208,3 @@ function optionChanged(state) {
     metaData(state);
 
 }
-
-//Call the initialize function
-init();
