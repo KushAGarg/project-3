@@ -97,8 +97,10 @@
               <li style="font-size: 16px"><strong>Some limitations of the dataset included:</strong></li>
               <ol>
                   <li id="list">We had no controls for population size or density when grouping by state.</li>
-                  <li id="list">More analysis is needed to remove the “duration” outliers which affected the averages. 
-                    The median duration was a far more accurate metric because, as one of the graphs shows, durations tended to be either short (quick sighting) or long (abductions?).</li>
+                  <li id="list">More analysis is needed to properly remove the “duration” outliers which affected the averages. 
+                    The median duration was a far more accurate metric because, as one of the graphs shows, durations tended to be either short (quick sighting) or long (abductions?).
+                    I removed the three most disruptive outliers, which lowered the average duration from 5800 seconds to 3165 seconds, just to illustrate 
+                    how much the outliers were warping the average.</li>
                   <li id="list">The vast majority of observations in the data came from the 21st century, though that may simply be a reflection 
                     of the origins of the recorded data rather than evidence that UFO sightings have substantially increased.</li>
                   <li id="list">The integrity of the data was uncertain at times, with descriptions not matching time or place. This was how the data was provided and not due to error on our part.</li>
@@ -213,10 +215,24 @@
                   <td>nm</td>
               </tr>
             </table>
-            
+            <div class="outliers">
+              <h2 style="color: white; text-align: center"><strong>Removing outliers</strong></h2>
+              <p class="centered-text">As mentioned above, when we looked at the disparity between the time of the occurence and the time reported against the 
+                average duration, it was clear there were 2-3 data points severely skewing the average. They were easy to locate using pandas 
+                dataframes, and I removed the three marked with the IDs "52326," "56118," and 60481." This brought the overall average down from 
+                5800 seconds to 3165 seconds. There are still outliers skewing the data, but they were by far the biggest offenders. The following figures demonstrate 
+                the before and after.
+              </p>
+              <img id="outlier-graphs" src="Images\Project3Graph7.jpg" alt="Figure 7">
+              <img id="outlier-graphs" src="Images\Project3Graph8.jpg" alt="Figure 8">
+            </div>
             <div class="graphs">
-              <h2 style="color: white"><strong>Graphs from the data</strong></h2>
-
+              <div class="graphs-header">
+                <h2 style="color: white"><strong>Graphs from the data</strong></h2>
+                <p class="centered-text" style="text-align: left">The following graphs were made using Matplotlib and pandas dataframes. It should be noted that the last two graphs still include 
+                  the aforementioned outliers which were removed from the data.
+                </p>
+              </div>
               <img id="data-graphs" src="Images\Project3Graph1.jpg" alt="Figure 1">
               <img id="data-graphs" src="Images\Project3Graph2.jpg" alt="Figure 2">
               <img id="data-graphs" src="Images\Project3Graph3.jpg" alt="Figure 3">

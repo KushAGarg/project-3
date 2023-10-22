@@ -154,7 +154,7 @@ function metaData(state) {
     const sightings = stateData.length;
     /* Math.round() only rounds to integers. Therefore, you need to
     * 10000, Math.round(), / 100 to get a percent. 10000 because you need to go from 0.xxxx to xxxx.0 to xx.xx. */
-    const sightingsPct = Math.round((sightings / 65113) * 10000) / 100;
+    const sightingsPct = Math.round((sightings / 65111) * 10000) / 100;
 
     // Average duration
     let averageDuration = 0;
@@ -198,7 +198,7 @@ function metaData(state) {
     // Populate metadata
     d3.select("#sample-metadata").html("");
     d3.select("#sample-metadata").append("h5").html(
-        `<u>Sightings:</u> ${sightings}/65113 (${sightingsPct}%)<br/><u>Average duration:</u> ${averageDuration} seconds<br/>\
+        `<u>Sightings:</u> ${sightings}/65111 (${sightingsPct}%)<br/><u>Average duration:</u> ${averageDuration} seconds<br/>\
         <u>Popular descriptor:</u> "${commonShape}"<br/><u>Oldest sighting:</u> ${oldestSighting}<br/>\
         <u>Last sighting in dataset:</u> ${newestSighting}`
     );

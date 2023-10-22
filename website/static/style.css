@@ -127,10 +127,25 @@ thead {
   text-align: center;
 }
 
+.graphs-header {
+  margin: 0px 40px;
+}
+
+.outliers {
+  margin: 40px;
+}
+
 #data-graphs {
   height: 600px;
   width: 600px;
   margin: 20px;
+}
+
+#outlier-graphs {
+  height: 500px;
+  width: 500px;
+  margin: 20px;
+  margin-left: 60px;
 }
 
 #sighting-comments {
