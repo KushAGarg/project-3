@@ -228,3 +228,8 @@ thead {
 #df-table tr, #df-table td {
   width: 150px;
 }
+
+.video-evidence {
+  color: white;
+  text-align: center;
+}
