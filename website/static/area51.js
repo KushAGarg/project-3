@@ -5,7 +5,12 @@ Swal.fire({
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'My eyes are open.'
+    confirmButtonText: 'My eyes are open.',
+    allowOutsideClick: false,
+    backdrop: 'static',
+    showCancelButton: false,
+    denyButtonText: 'Better not.',
+    showDenyButton: true
   }).then((result) => {
     if (result.isConfirmed) {
       Swal.fire(
@@ -13,5 +18,7 @@ Swal.fire({
         'You have been warned.',
         'success'
       )
+    } else if (result.isDenied) {
+      window.location.href = 'index.html';
     }
   })
