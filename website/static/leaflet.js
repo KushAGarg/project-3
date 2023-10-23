@@ -52,28 +52,28 @@ function createMap(ufos) {
       collapsed: false
     }).addTo(myMap);
     
-    // Create a legend to display information about our map.
-    let legend = L.control({
-      position: "bottomright"
-    });
+    // // Create a legend (COMMENTED OUT)
+    // let legend = L.control({
+    //   position: "bottomright"
+    // });
 
-    // When the layer control is added, insert a div with the class of "legend".
-    legend.onAdd = function() {
-      let div = L.DomUtil.create("div", "legend");
+    // // When the layer control is added, insert a div with the class of "legend".
+    // legend.onAdd = function() {
+    //   let div = L.DomUtil.create("div", "legend");
 
-      let grades = [-10, 10, 30, 50, 70, 90];
-      let colors = ["green", "yellowgreen", "yellow", "orange", "orangered","red"]
+    //   let grades = [-10, 10, 30, 50, 70, 90];
+    //   let colors = ["green", "yellowgreen", "yellow", "orange", "orangered","red"]
 
-      //Assistance
-      for (let i = 0; i < grades.length; i++) {
-        div.innerHTML += "<i style='background: " + colors[i] + "'>&nbsp;</i> "
-          + grades[i] + (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
-      }
-      return div;
-    };
+    //   //Assistance
+    //   for (let i = 0; i < grades.length; i++) {
+    //     div.innerHTML += "<i style='background: " + colors[i] + "'>&nbsp;</i> "
+    //       + grades[i] + (grades[i + 1] ? "&ndash;" + grades[i + 1] + "<br>" : "+");
+    //   }
+    //   return div;
+    // };
 
-    // Add the info legend to the map.
-    legend.addTo(myMap);
+    // // Add the info legend to the map.
+    // legend.addTo(myMap);
 }
 
 // function onEachFeature(feature, layer) {
