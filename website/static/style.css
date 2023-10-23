@@ -259,3 +259,32 @@ thead {
   display: inline-block; /* Display images side by side */
   text-align: center;
 }
+
+/* .link1 {
+  color: palegreen;
+  font-size: 30px;
+  display: block;
+  text-align: center;
+}  */
+
+.button-container {
+  display: block; /* or "block" if you want it to span the full width */
+  background-color: seagreen; /* Background color for the button */
+  padding: 10px 20px; /* Adjust padding as needed */
+  border-radius: 10px; /* Rounded corners for the button */
+  text-align: center; /* Center-align text within the container */
+  margin: 0 400px;
+}
+
+.button-container a {
+  text-decoration: none; /* Remove default underline on links */
+  color: #fff; /* Text color for the button */
+  display: block; /* Make the link a block-level element for full button width */
+  font-weight: bold; /* Optionally make the text bold */
+}
+
+.button-container:hover {
+  background-color: #0056b3; /* Change background color on hover */
+  transform: scale(1.05); /* Scale the button on hover (makes it "pop") */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle box shadow on hover */
+}
