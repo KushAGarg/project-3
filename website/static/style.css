@@ -251,3 +251,11 @@ thead {
   color: white;
   text-align: left;
 }
+
+#area51-images {
+  width: 600px;
+  margin: 20px;
+  border: 2px solid black;
+  display: inline-block; /* Display images side by side */
+  text-align: center;
+}
