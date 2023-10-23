@@ -89,6 +89,7 @@ function barChart(state) {
 // pieChart function
 function pieChart(state) {
 // Pie chart that shows the descriptors (shapes) in the state where there were sightings.
+// (ERROR: "Other" and "other" ARE APPEARING AS SEPARATE CATEGORIES.)
 
     const lowercaseState = state.toLowerCase();
         
@@ -105,7 +106,7 @@ function pieChart(state) {
         .sort((a, b) => b[1] - a[1])
         .slice(0, 20)
         // Get rid of null (ERROR: NULL IS STILL APPEARING)
-        .filter(item => item !== null && item !== undefined && item !== "" && item !== "null");
+        .filter(item => (item !== null) && (item !== undefined) && (item !== "") && (item !== "null"));
 
     // Sum the counts of all items beyond the first 10
     const otherCount = sortedShapes.slice(10).reduce((total, item) => total + item[1], 0);
